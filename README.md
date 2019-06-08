@@ -1,8 +1,7 @@
-#CTC16-Data-Gathering
+# CTC16-Data-Gathering
 
-#API
-
-##Run the API locally
+# API
+## Run the API locally
 The API is currently a python server. You need to run this locally
 
 Example: 
