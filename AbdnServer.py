@@ -92,22 +92,42 @@ def api_filter():
 def api_filter2():
     query_parameters = request.args
 
-    location_id = query_parameters.get('id')
+    location_id = query_parameters.get('location_id')
     if not (location_id):
         lat = query_parameters.get('lat')
         lon = query_parameters.get('lon')
-        location_id = getIdFormLocation (lat, lon)
+    start_time = query_parameters.get('start_time')
+    start_time = parser.parse(start_time)
+    start_time = int((start_time - datetime(1970, 1, 1)).total_seconds())
+    end_time = query_parameters.get('end_time')
+    end_time = parser.parse(end_time)
+    end_time = int((end_time - datetime(1970, 1, 1)).total_seconds())
+    period = query_parameters.get('period')
+    if (not(start_time) or not(end_time)):
+        if not(end_time):
+            end_time = start_time + period
+        elif not(start_time):
+            start_time = end_time - period        
+    radius = query_parameters.get('radius')
+    smoothing = query_parameters.get('smoothing')
+    samples = query_parameters.get('samples')
 
-    start_date = query_parameters.get('start_date')
-    start_date = parser.parse(start_date)
-    start_date = int((start_date - datetime(1970, 1, 1)).total_seconds())
-    end_date = query_parameters.get('end_date')
-    end_date = parser.parse(end_date)
-    end_date = int((end_date - datetime(1970, 1, 1)).total_seconds())
-    
-    results = {location_id:{'info':{}, 'readings':{}, 'error':{}}}
+
+    results = {'query':{},'errors':[],'info':[], 'data':{'headers':[],'results':[]}}
+    results['query'] = {
+        'location_id':location_id,
+        'lat':lat,
+        'lon':lon,
+        'radius':radius,
+        'start_time':start_time,
+        'end_time':end_time,
+        'period':period,
+        'smoothing':smoothing,
+        'samples':samples
+        }
+    return jsonify(results)
     #check if sensor data exists on server
-    querystr = "http://192.168.43.154:8086/query?"
+    #querystr = "http://192.168.43.154:8086/query?"
 
 
 if __name__ == '__main__':
