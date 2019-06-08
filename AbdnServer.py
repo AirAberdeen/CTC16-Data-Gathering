@@ -88,6 +88,25 @@ def api_filter():
 
     return jsonify(results)
 
+@app.route('/api/v2/data', methods=['GET'])
+def api_filter2():
+    query_parameters = request.args
+
+    location_id = query_parameters.get('id')
+    if not (location_id):
+        lat = query_parameters.get('lat')
+        lon = query_parameters.get('lon')
+        location_id = getIdFormLocation (lat, lon)
+
+    start_date = query_parameters.get('start_date')
+    start_date = parser.parse(start_date)
+    start_date = int((start_date - datetime(1970, 1, 1)).total_seconds())
+    end_date = query_parameters.get('end_date')
+    end_date = parser.parse(end_date)
+    end_date = int((end_date - datetime(1970, 1, 1)).total_seconds())
+    
+    results = {location_id:{'info':{}, 'readings':{}, 'error':{}}}
+    #check if sensor data exists on server
 
 if __name__ == '__main__':
     app.run(debug=True)
