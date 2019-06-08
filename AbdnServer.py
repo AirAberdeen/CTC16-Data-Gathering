@@ -107,6 +107,8 @@ def api_filter2():
     
     results = {location_id:{'info':{}, 'readings':{}, 'error':{}}}
     #check if sensor data exists on server
+    querystr = "http://192.168.43.154:8086/query?"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
