@@ -1,0 +1,509 @@
+{
+    "11199": {
+        "info": {
+            "P1": {
+                "SDS011": "22068"
+            },
+            "P2": {
+                "SDS011": "22068"
+            },
+            "latitude": "57.150",
+            "location_id": "11199",
+            "longitude": "-2.166"
+        }
+    },
+    "11392": {
+        "info": {
+            "P1": {
+                "SDS011": "22449"
+            },
+            "P2": {
+                "SDS011": "22449"
+            },
+            "humidity": {
+                "DHT22": "22450"
+            },
+            "latitude": "57.390",
+            "location_id": "11392",
+            "longitude": "-2.468",
+            "temperature": {
+                "DHT22": "22450"
+            }
+        }
+    },
+    "11407": {
+        "info": {
+            "P1": {
+                "SDS011": "22480"
+            },
+            "P2": {
+                "SDS011": "22480"
+            },
+            "humidity": {
+                "BME280": "22481"
+            },
+            "latitude": "56.964",
+            "location_id": "11407",
+            "longitude": "-2.212",
+            "pressure": {
+                "BME280": "22481"
+            },
+            "temperature": {
+                "BME280": "22481"
+            }
+        }
+    },
+    "11428": {
+        "info": {
+            "P1": {
+                "SDS011": "22523"
+            },
+            "P2": {
+                "SDS011": "22523"
+            },
+            "humidity": {
+                "DHT22": "22524"
+            },
+            "latitude": "57.110",
+            "location_id": "11428",
+            "longitude": "-2.240",
+            "temperature": {
+                "DHT22": "22524"
+            }
+        }
+    },
+    "11441": {
+        "info": {
+            "P1": {
+                "SDS011": "22549"
+            },
+            "P2": {
+                "SDS011": "22549"
+            },
+            "humidity": {
+                "DHT22": "22550"
+            },
+            "latitude": "57.164",
+            "location_id": "11441",
+            "longitude": "-2.120",
+            "temperature": {
+                "DHT22": "22550"
+            }
+        }
+    },
+    "11466": {
+        "info": {
+            "P1": {
+                "SDS011": "22597"
+            },
+            "P2": {
+                "SDS011": "22597"
+            },
+            "humidity": {
+                "DHT22": "22598"
+            },
+            "latitude": "57.190",
+            "location_id": "11466",
+            "longitude": "-2.278",
+            "temperature": {
+                "DHT22": "22598"
+            }
+        }
+    },
+    "11473": {
+        "info": {
+            "P1": {
+                "SDS011": "22612"
+            },
+            "P2": {
+                "SDS011": "22612"
+            },
+            "humidity": {
+                "DHT22": "22613"
+            },
+            "latitude": "57.510",
+            "location_id": "11473",
+            "longitude": "-1.840",
+            "temperature": {
+                "DHT22": "22613"
+            }
+        }
+    },
+    "11476": {
+        "info": {
+            "P1": {
+                "SDS011": "22618"
+            },
+            "P2": {
+                "SDS011": "22618"
+            },
+            "humidity": {
+                "DHT22": "22619"
+            },
+            "latitude": "57.158",
+            "location_id": "11476",
+            "longitude": "-2.106",
+            "temperature": {
+                "DHT22": "22619"
+            }
+        }
+    },
+    "11513": {
+        "info": {
+            "P1": {
+                "SDS011": "22691"
+            },
+            "P2": {
+                "SDS011": "22691"
+            },
+            "humidity": {
+                "DHT22": "22692"
+            },
+            "latitude": "57.172",
+            "location_id": "11513",
+            "longitude": "-2.134",
+            "temperature": {
+                "DHT22": "22692"
+            }
+        }
+    },
+    "11607": {
+        "info": {
+            "P1": {
+                "SDS011": "22879"
+            },
+            "P2": {
+                "SDS011": "22879"
+            },
+            "humidity": {
+                "DHT22": "22880"
+            },
+            "latitude": "57.548",
+            "location_id": "11607",
+            "longitude": "-2.024",
+            "temperature": {
+                "DHT22": "22880"
+            }
+        }
+    },
+    "11610": {
+        "info": {
+            "P1": {
+                "SDS011": "22885"
+            },
+            "P2": {
+                "SDS011": "22885"
+            },
+            "humidity": {
+                "DHT22": "22886"
+            },
+            "latitude": "57.268",
+            "location_id": "11610",
+            "longitude": "-2.188",
+            "temperature": {
+                "DHT22": "22886"
+            }
+        }
+    },
+    "11670": {
+        "info": {
+            "P1": {
+                "SDS011": "23007"
+            },
+            "P2": {
+                "SDS011": "23007"
+            },
+            "humidity": {
+                "DHT22": "23008"
+            },
+            "latitude": "57.150",
+            "location_id": "11670",
+            "longitude": "-2.108",
+            "temperature": {
+                "DHT22": "23008"
+            }
+        }
+    },
+    "11991": {
+        "info": {
+            "P1": {
+                "SDS011": "23628"
+            },
+            "P2": {
+                "SDS011": "23628"
+            },
+            "humidity": {
+                "DHT22": "23629"
+            },
+            "latitude": "57.150",
+            "location_id": "11991",
+            "longitude": "-2.134",
+            "temperature": {
+                "DHT22": "23629"
+            }
+        }
+    },
+    "12697": {
+        "info": {
+            "P1": {
+                "SDS011": "24543"
+            },
+            "P2": {
+                "SDS011": "24543"
+            },
+            "humidity": {
+                "DHT22": "24544"
+            },
+            "latitude": "57.20352965",
+            "location_id": "12697",
+            "longitude": "-2.28857231",
+            "temperature": {
+                "DHT22": "24544"
+            }
+        }
+    },
+    "13084": {
+        "info": {
+            "P1": {
+                "SDS011": "25095"
+            },
+            "P2": {
+                "SDS011": "25095"
+            },
+            "humidity": {
+                "DHT22": "25096"
+            },
+            "latitude": "57.174",
+            "location_id": "13084",
+            "longitude": "-2.112",
+            "temperature": {
+                "DHT22": "25096"
+            }
+        }
+    },
+    "13447": {
+        "info": {
+            "P1": {
+                "SDS011": "25555"
+            },
+            "P2": {
+                "SDS011": "25555"
+            },
+            "humidity": {
+                "DHT22": "25556"
+            },
+            "latitude": "57.174",
+            "location_id": "13447",
+            "longitude": "-2.112",
+            "temperature": {
+                "DHT22": "25556"
+            }
+        }
+    },
+    "13887": {
+        "info": {
+            "P1": {
+                "SDS011": "22068"
+            },
+            "P2": {
+                "SDS011": "22068"
+            },
+            "latitude": "57.196",
+            "location_id": "13887",
+            "longitude": "-2.100"
+        }
+    },
+    "14250": {
+        "info": {
+            "P1": {
+                "SDS011": "26616"
+            },
+            "P2": {
+                "SDS011": "26616"
+            },
+            "humidity": {
+                "DHT22": "26617"
+            },
+            "latitude": "57.172",
+            "location_id": "14250",
+            "longitude": "-2.124",
+            "temperature": {
+                "DHT22": "26617"
+            }
+        }
+    },
+    "2688": {
+        "info": {
+            "P1": {
+                "SDS011": "5331"
+            },
+            "P2": {
+                "SDS011": "5331"
+            },
+            "humidity": {
+                "DHT22": "5332"
+            },
+            "latitude": "57.128",
+            "location_id": "2688",
+            "longitude": "-2.130",
+            "temperature": {
+                "DHT22": "5332"
+            }
+        }
+    },
+    "3121": {
+        "info": {
+            "P1": {
+                "SDS011": "5331"
+            },
+            "P2": {
+                "SDS011": "5331"
+            },
+            "humidity": {
+                "DHT22": "5332"
+            },
+            "latitude": "57.138",
+            "location_id": "3121",
+            "longitude": "-2.078",
+            "temperature": {
+                "DHT22": "5332"
+            }
+        }
+    },
+    "3939": {
+        "info": {
+            "P1": {
+                "SDS011": "7789"
+            },
+            "P2": {
+                "SDS011": "7789"
+            },
+            "humidity": {
+                "DHT22": "7790"
+            },
+            "latitude": "57.130",
+            "location_id": "3939",
+            "longitude": "-2.086",
+            "temperature": {
+                "DHT22": "7790"
+            }
+        }
+    },
+    "4315": {
+        "info": {
+            "P1": {
+                "SDS011": "8554"
+            },
+            "P2": {
+                "SDS011": "8554"
+            },
+            "humidity": {
+                "DHT22": "8555"
+            },
+            "latitude": "57.146",
+            "location_id": "4315",
+            "longitude": "-2.114",
+            "temperature": {
+                "DHT22": "8555"
+            }
+        }
+    },
+    "7647": {
+        "info": {
+            "P1": {
+                "SDS011": "15092"
+            },
+            "P2": {
+                "SDS011": "15092"
+            },
+            "humidity": {
+                "BME280": "15093"
+            },
+            "latitude": "56.964",
+            "location_id": "7647",
+            "longitude": "-2.212",
+            "pressure": {
+                "BME280": "15093"
+            },
+            "temperature": {
+                "BME280": "15093"
+            }
+        }
+    },
+    "7832": {
+        "info": {
+            "P1": {
+                "SDS011": "15462"
+            },
+            "P2": {
+                "SDS011": "15462"
+            },
+            "humidity": {
+                "DHT22": "15463"
+            },
+            "latitude": "57.124",
+            "location_id": "7832",
+            "longitude": "-2.102",
+            "temperature": {
+                "DHT22": "15463"
+            }
+        }
+    },
+    "8320": {
+        "info": {
+            "P1": {
+                "SDS011": "16422"
+            },
+            "P2": {
+                "SDS011": "16422"
+            },
+            "humidity": {
+                "BME280": "16423"
+            },
+            "latitude": "57.456",
+            "location_id": "8320",
+            "longitude": "-2.378",
+            "pressure": {
+                "BME280": "16423"
+            },
+            "temperature": {
+                "BME280": "16423"
+            }
+        }
+    },
+    "8655": {
+        "info": {
+            "P1": {
+                "SDS011": "17079"
+            },
+            "P2": {
+                "SDS011": "17079"
+            },
+            "humidity": {
+                "DHT22": "17080"
+            },
+            "latitude": "57.106",
+            "location_id": "8655",
+            "longitude": "-2.088",
+            "temperature": {
+                "DHT22": "17080"
+            }
+        }
+    },
+    "8718": {
+        "info": {
+            "humidity": {
+                "BME280": "17204"
+            },
+            "latitude": "57.178",
+            "location_id": "8718",
+            "longitude": "-2.092",
+            "pressure": {
+                "BME280": "17204"
+            },
+            "temperature": {
+                "BME280": "17204"
+            }
+        }
+    }
+}
