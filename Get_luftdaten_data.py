@@ -27,12 +27,15 @@ def get_historic_data(current_data, start_date):
 			full_link = 'http://archive.luftdaten.info/' + str_date + '/' + filename
 
 			#check if file has already been downloaded
-			if (os.path.isfile(file_directory +'done/'+ filename)):
-				#file exists, skip
-				sensor_flag = False
-			else:
-				#file does not exist. Proceed to try download.
-				sensor_flag = downloader(full_link, filename)
+			#if (os.path.isfile(file_directory +'done/'+ filename)):
+			with open(file_directory + 'list.txt', 'r') as f:
+				
+				if (filename in f.read()):
+					#file exists, skip
+					sensor_flag = False
+				else:
+					#file does not exist. Proceed to try download.
+					sensor_flag = downloader(full_link, filename)
 			#point_date moves back a day
 			point_date = point_date - timedelta(days = 1)
 
@@ -179,6 +182,7 @@ def cleanUpCSVs():
 	for input_file in file_list:
 		with open(file_directory + 'list.txt', "a") as f:
 			f.write(input_file[22:]+ "\n")
+			os.remove(input_file)
 		print ("recored & deleted", input_file)
 		
 
