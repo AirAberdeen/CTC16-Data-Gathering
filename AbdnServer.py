@@ -96,6 +96,8 @@ def api_filter2():
     if not (location_id):
         lat = query_parameters.get('lat')
         lon = query_parameters.get('lon')
+        location_id = getIdFormLocation (lat, lon)
+
     start_time = query_parameters.get('start_time')
     start_time = parser.parse(start_time)
     start_time = int((start_time - datetime(1970, 1, 1)).total_seconds())
@@ -112,7 +114,7 @@ def api_filter2():
     smoothing = query_parameters.get('smoothing')
     samples = query_parameters.get('samples')
 
-
+    #empty results
     results = {'query':{},'errors':[],'info':[], 'data':{'headers':[],'results':[]}}
     results['query'] = {
         'location_id':location_id,
@@ -125,6 +127,26 @@ def api_filter2():
         'smoothing':smoothing,
         'samples':samples
         }
+    #get response
+    if (os.path.isfile(json_file + 'v2/' + location_id + '.json')):
+        #open json file
+        with open(json_file + 'v2/' + location_id + '.json', "r") as f:
+            d = json.load(f)
+            #get info
+            results['info'] = d['info']
+
+            #get all timestamps
+            all_time = []
+            for r in d["data"]["results"]:
+                t = r[0]
+                if (t > start_time) and (t < end_time):
+                    results['data']["results"].append(r)
+            results['data']["headers"].append(d["data"]["headers"])
+    else:
+        results['errors'] = {'human':"We don't have a sensor by that name round here"}
+    #results = "blah"
+
+
     return jsonify(results)
     #check if sensor data exists on server
     #querystr = "http://192.168.43.154:8086/query?"
