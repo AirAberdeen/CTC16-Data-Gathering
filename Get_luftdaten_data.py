@@ -171,6 +171,17 @@ def tidy_values(our_list):
 						})
 	return(new_dict)
 
+def cleanUpCSVs():
+	input_directory = file_directory
+	if ((input_directory[-1:] != '\\') & (input_directory[-1:] != '/')):
+		input_directory = input_directory + "\\"
+	file_list = glob.iglob(input_directory+'/done/' +'*.csv')
+	for input_file in file_list:
+		with open(file_directory + 'list.txt', "a") as f:
+			f.write(input_file[22:]+ "\n")
+		print ("recored & deleted", input_file)
+		
+
 def main():
 	#These are pre-defined boxes for searching
 	Aberdeen = [57.25, -2.40, 57.00, -2.00]
@@ -206,6 +217,8 @@ def main():
 	MrParsy()
 	print('Building summary file...')
 	infolist()
+	print('Removing csvs')
+	cleanUpCSVs()
 
 	#weather_data = get_weather.main(box)
 	#pp = pprint.PrettyPrinter(indent=1)
