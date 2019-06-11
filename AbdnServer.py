@@ -109,7 +109,10 @@ def api_filter2():
         if not(end_time):
             end_time = start_time + period
         elif not(start_time):
-            start_time = end_time - period        
+            start_time = end_time - period
+        else:
+            end_time = datetime.utcnow().total_seconds()
+            start_time = end_time - period
     radius = query_parameters.get('radius')
     smoothing = query_parameters.get('smoothing')
     samples = query_parameters.get('samples')
@@ -117,15 +120,15 @@ def api_filter2():
     #empty results
     results = {'query':{},'errors':[],'info':[], 'data':{'headers':[],'results':[]}}
     results['query'] = {
-        'location_id':location_id,
-        'lat':lat,
-        'lon':lon,
-        'radius':radius,
-        'start_time':start_time,
-        'end_time':end_time,
-        'period':period,
-        'smoothing':smoothing,
-        'samples':samples
+        'location_id':query_parameters.get('location_id'),
+        'lat':query_parameters.get('lat'),
+        'lon':query_parameters.get('lon'),
+        'radius':query_parameters.get('radius'),
+        'start_time':query_parameters.get('start_time'),
+        'end_time':query_parameters.get('end_time'),
+        'period':query_parameters.get('period'),
+        'smoothing':query_parameters.get('smoothing'),
+        'samples':query_parameters.get('samples')
         }
     #get response
     if (os.path.isfile(json_file + 'v2/' + location_id + '.json')):
