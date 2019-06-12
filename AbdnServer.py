@@ -11,6 +11,35 @@ json_file = "./data/big_dump/"
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
+def getAllIdsInRadius (lat, lon, search_radius):
+    # first find nearest weather city from weather_data
+    min_dist = search_radius
+    lat1a = float(lat)
+    lon1a = float(lon)
+    lat1 = radians(lat1a)
+    lon1 = radians(lon1a)
+    location_ids = []
+    with open(json_file + "info.json", "r") as f:
+        d = json.load(f)
+        for location_id_temp in d:  
+            lat2 = float(d[location_id_temp]['info']['latitude'])
+            lon2 = float(d[location_id_temp]['info']['longitude'])
+            # see https://stackoverflow.com/questions/19412462/getting-distance-between-two-points-based-on-latitude-longitude/43211266#43211266 for details
+
+            R = 6373.0 #radius of earth in km
+            lat2 = radians(lat2)
+            lon2 = radians(lon2)
+            dlon = lon2 - lon1
+            dlat = lat2 - lat1
+            a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+            c = 2 * atan2(sqrt(a), sqrt(1 - a))
+            dist = R * c
+
+            if (dist < (min_dist/1000)):
+                location_id.append(location_id_temp)
+    
+    return (location_ids)
+
 def getIdFormLocation (lat, lon):
     # first find nearest weather city from weather_data
     min_dist = 1000000
@@ -26,7 +55,7 @@ def getIdFormLocation (lat, lon):
             lon2 = float(d[location_id_temp]['info']['longitude'])
             # see https://stackoverflow.com/questions/19412462/getting-distance-between-two-points-based-on-latitude-longitude/43211266#43211266 for details
 
-            R = 6373.0 #radius of earth
+            R = 6373.0 #radius of earth in km
             lat2 = radians(lat2)
             lon2 = radians(lon2)
             dlon = lon2 - lon1
@@ -93,10 +122,20 @@ def api_filter2():
     query_parameters = request.args
 
     location_id = query_parameters.get('location_id')
+    radius = query_parameters.get('radius')
+    smoothing = query_parameters.get('smoothing')
+    samples = query_parameters.get('samples')
+    
     if not (location_id):
-        lat = query_parameters.get('lat')
-        lon = query_parameters.get('lon')
-        location_id = getIdFormLocation (lat, lon)
+        if not (radius):
+            lat = query_parameters.get('lat')
+            lon = query_parameters.get('lon')
+            location_id = getIdFormLocation (lat, lon)
+        else:
+            #get all sensors in radius
+            lat = query_parameters.get('lat')
+            lon = query_parameters.get('lon')
+            location_id = getAllIdsInRadius (lat, lon, radius)
 
     start_time = query_parameters.get('start_time')
     start_time = parser.parse(start_time)
@@ -113,9 +152,6 @@ def api_filter2():
         else:
             end_time = datetime.utcnow().total_seconds()
             start_time = end_time - period
-    radius = query_parameters.get('radius')
-    smoothing = query_parameters.get('smoothing')
-    samples = query_parameters.get('samples')
 
     #empty results
     results = {'query':{},'errors':[],'info':[], 'data':{'headers':[],'results':[]}}
@@ -146,7 +182,7 @@ def api_filter2():
                     results['data']["results"].append(r)
             results['data']["headers"].append(d["data"]["headers"])
     else:
-        results['errors'] = {'human':"We don't have a sensor by that name round here"}
+        results['errors'] = {'100':"We don't have a sensor by that name round here"}
     #results = "blah"
 
 
