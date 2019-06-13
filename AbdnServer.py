@@ -121,38 +121,6 @@ def api_filter():
 def api_filter2():
     query_parameters = request.args
 
-    location_id = query_parameters.get('location_id')
-    radius = query_parameters.get('radius')
-    smoothing = query_parameters.get('smoothing')
-    samples = query_parameters.get('samples')
-    
-    if not (location_id):
-        if not (radius):
-            lat = query_parameters.get('lat')
-            lon = query_parameters.get('lon')
-            location_id = getIdFormLocation (lat, lon)
-        else:
-            #get all sensors in radius
-            lat = query_parameters.get('lat')
-            lon = query_parameters.get('lon')
-            location_id = getAllIdsInRadius (lat, lon, radius)
-
-    start_time = query_parameters.get('start_time')
-    start_time = parser.parse(start_time)
-    start_time = int((start_time - datetime(1970, 1, 1)).total_seconds())
-    end_time = query_parameters.get('end_time')
-    end_time = parser.parse(end_time)
-    end_time = int((end_time - datetime(1970, 1, 1)).total_seconds())
-    period = query_parameters.get('period')
-    if (not(start_time) or not(end_time)):
-        if not(end_time):
-            end_time = start_time + period
-        elif not(start_time):
-            start_time = end_time - period
-        else:
-            end_time = datetime.utcnow().total_seconds()
-            start_time = end_time - period
-
     #empty results
     results = {'query':{},'errors':[],'info':[], 'data':{'headers':[],'results':[]}}
     results['query'] = {
@@ -166,6 +134,54 @@ def api_filter2():
         'smoothing':query_parameters.get('smoothing'),
         'samples':query_parameters.get('samples')
         }
+
+    location_id = query_parameters.get('location_id')
+    radius = query_parameters.get('radius')
+    
+    if not (location_id):
+        if not (radius):
+            lat = query_parameters.get('lat')
+            lon = query_parameters.get('lon')
+            location_id = getIdFormLocation (lat, lon)
+        else:
+            #get all sensors in radius
+            lat = query_parameters.get('lat')
+            lon = query_parameters.get('lon')
+            location_id = getAllIdsInRadius (lat, lon, radius)
+    if not (location_id):
+        results['errors'].append({'300':"can't resolve location id"})
+
+    start_time = query_parameters.get('start_time')
+    if (start_time):
+        start_time = parser.parse(start_time)
+        start_time = int((start_time - datetime(1970, 1, 1)).total_seconds())
+    end_time = query_parameters.get('end_time')
+    if (end_time):
+        end_time = parser.parse(end_time)
+        end_time = int((end_time - datetime(1970, 1, 1)).total_seconds())
+    period = query_parameters.get('period')
+    if (period):
+        if (start_time and not(end_time)):
+            end_time = start_time + int(period)
+        elif not(start_time) and end_time:
+            start_time = end_time - int(period)
+        else:
+            end_time = datetime.utcnow()
+            end_time = int((end_time - datetime(1970, 1, 1)).total_seconds())
+            start_time = end_time - int(period)
+    if not (start_time):
+        results['errors'].append({'200':"time period not understood"})
+
+    smoothing = query_parameters.get('smoothing')
+    if (smoothing):
+        smoothing *= 60 #convert to seconds
+    samples = query_parameters.get('samples')
+    if (start_time):
+        if (samples):
+            samples *= 60 #convert to seconds
+            if not (smoothing):
+                smoothing = samples
+
     #get response
     if (os.path.isfile(json_file + 'v2/' + location_id + '.json')):
         #open json file
@@ -182,7 +198,7 @@ def api_filter2():
                     results['data']["results"].append(r)
             results['data']["headers"].append(d["data"]["headers"])
     else:
-        results['errors'] = {'100':"We don't have a sensor by that name round here"}
+        results['errors'].append({'100':"We don't have a sensor by that name round here"})
     #results = "blah"
 
 
