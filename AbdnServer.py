@@ -13,7 +13,7 @@ app.config["DEBUG"] = True
 
 def getAllIdsInRadius (lat, lon, search_radius):
     # first find nearest weather city from weather_data
-    min_dist = search_radius
+    min_dist = search_radius/1000 # convert m to km
     lat1a = float(lat)
     lon1a = float(lon)
     lat1 = radians(lat1a)
@@ -35,7 +35,7 @@ def getAllIdsInRadius (lat, lon, search_radius):
             c = 2 * atan2(sqrt(a), sqrt(1 - a))
             dist = R * c
 
-            if (dist < (min_dist/1000)):
+            if (dist < min_dist):
                 location_ids.append(location_id_temp)
     
     return (location_ids)
@@ -47,7 +47,7 @@ def getIdFormLocation (lat, lon):
     lon1a = float(lon)
     lat1 = radians(lat1a)
     lon1 = radians(lon1a)
-    location_id = "3121"
+    location_id = []
     with open(json_file + "info.json", "r") as f:
         d = json.load(f)
         for location_id_temp in d:  
@@ -135,22 +135,22 @@ def api_filter2():
         'samples':query_parameters.get('samples')
         }
 
-    location_id = query_parameters.get('location_id')
+    location_id = [query_parameters.get('location_id')]
     radius = query_parameters.get('radius')
     if (radius):
         radius = int(radius)
     
-    if not (location_id):
+    if not (location_id[0]):
         if not (radius):
             lat = query_parameters.get('lat')
             lon = query_parameters.get('lon')
-            location_id = getIdFormLocation (lat, lon)
+            location_id = [getIdFormLocation (lat, lon)]
         else:
             #get all sensors in radius
             lat = query_parameters.get('lat')
             lon = query_parameters.get('lon')
             location_id = getAllIdsInRadius (lat, lon, radius)
-    if not (location_id):
+    if not (location_id[0]):
         results['errors'].append({'300':"can't resolve location id"})
 
     start_time = query_parameters.get('start_time')
@@ -185,24 +185,21 @@ def api_filter2():
                 smoothing = samples
 
     #get response
-    if (os.path.isfile(json_file + 'v2/' + location_id + '.json')):
-        #open json file
-        with open(json_file + 'v2/' + location_id + '.json', "r") as f:
-            d = json.load(f)
-            #get info
-            results['info'] = d['info']
-
-            #get all timestamps
-            all_time = []
-            for r in d["data"]["results"]:
-                t = r[0]
-                if (t > start_time) and (t < end_time):
-                    results['data']["results"].append(r)
-            results['data']["headers"].append(d["data"]["headers"])
-    else:
-        results['errors'].append({'100':"We don't have a sensor by that name round here"})
-    #results = "blah"
-
+    for temp_id in location_id:
+        if (os.path.isfile(json_file + 'v2/' + temp_id + '.json')):
+            #open json file
+            with open(json_file + 'v2/' + temp_id + '.json', "r") as f:
+                d = json.load(f)
+                #get info
+                results['info'].append(d['info'])
+                #get data                
+                for r in d["data"]["results"]:
+                    t = r[0]
+                    if (t > start_time) and (t < end_time):
+                        results['data']["results"].append(r)
+                results['data']["headers"].append(d["data"]["headers"])
+        else:
+            results['errors'].append({'100':"We don't have a sensor by that name round here"})
 
     return jsonify(results)
     #check if sensor data exists on server
