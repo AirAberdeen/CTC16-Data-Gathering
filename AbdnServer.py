@@ -36,7 +36,7 @@ def getAllIdsInRadius (lat, lon, search_radius):
             dist = R * c
 
             if (dist < (min_dist/1000)):
-                location_id.append(location_id_temp)
+                location_ids.append(location_id_temp)
     
     return (location_ids)
 
@@ -137,6 +137,8 @@ def api_filter2():
 
     location_id = query_parameters.get('location_id')
     radius = query_parameters.get('radius')
+    if (radius):
+        radius = int(radius)
     
     if not (location_id):
         if not (radius):
