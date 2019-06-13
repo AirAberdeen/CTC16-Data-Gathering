@@ -7,7 +7,7 @@ This repo uses Python3.
 # API V2
 
 ## Using the API
-See the wiki
+See the [Wiki](https://github.com/CodeTheCity/CTC16-Data-Gathering/wiki)
 
 ## Run the API locally
 The API is currently a python server. You need to run this locally
