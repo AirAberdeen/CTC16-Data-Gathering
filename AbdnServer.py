@@ -132,7 +132,6 @@ def api_filter2():
         'end_time':query_parameters.get('end_time'),
         'period':query_parameters.get('period'),
         'smoothing':query_parameters.get('smoothing'),
-        'samples':query_parameters.get('samples')
         }
 
     location_id = [query_parameters.get('location_id')]
@@ -177,27 +176,55 @@ def api_filter2():
     smoothing = query_parameters.get('smoothing')
     if (smoothing):
         smoothing *= 60 #convert to seconds
-    samples = query_parameters.get('samples')
-    if (start_time):
-        if (samples):
-            samples *= 60 #convert to seconds
-            if not (smoothing):
-                smoothing = samples
 
     #get response
+    #reference headers
+    refh = [
+            "timestamp",
+            "P1",
+            "P2",
+            "humidity",
+            "pressure",
+            "temperature"
+        ]
+    results['data']["headers"] = refh
+    print (refh)
     for temp_id in location_id:
+        refh = [
+            "timestamp",
+            "P1",
+            "P2",
+            "humidity",
+            "pressure",
+            "temperature"
+        ]
         if (os.path.isfile(json_file + 'v2/' + temp_id + '.json')):
             #open json file
             with open(json_file + 'v2/' + temp_id + '.json', "r") as f:
+                posh = refh #used for repositioining headers
                 d = json.load(f)
                 #get info
                 results['info'].append(d['info'])
+                #get headers
+                tempheaders = d["data"]["headers"]
+                #get headers in correct order
+                for h in refh:
+                    if h in tempheaders:
+                        posh[refh.index(h)] = tempheaders.index(h)
+                    else:
+                        posh[refh.index(h)] = "blank"
                 #get data                
                 for r in d["data"]["results"]:
                     t = r[0]
+                    r2 = []
                     if (t > start_time) and (t < end_time):
-                        results['data']["results"].append(r)
-                results['data']["headers"].append(d["data"]["headers"])
+                        for p in posh:
+                            if not (p == "blank"):
+                                r2.append(r[p]) 
+                            else:
+                                r2.append(None)
+                        results['data']["results"].append(r2)
+                
         else:
             results['errors'].append({'100':"We don't have a sensor by that name round here"})
 
