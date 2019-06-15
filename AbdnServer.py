@@ -5,6 +5,7 @@ from datetime import datetime, tzinfo, timezone, date, timedelta
 from dateutil import parser
 import math
 from math import sin, cos, sqrt, atan2, radians
+from operator import itemgetter 
 
 json_file = "./data/big_dump/"
 
@@ -227,7 +228,8 @@ def api_filter2():
                 
         else:
             results['errors'].append({'100':"We don't have a sensor by that name round here"})
-
+    resultslist  = results['data']["results"]
+    results['data']["results"] = sorted(resultslist, key = itemgetter(0)) 
     return jsonify(results)
     #check if sensor data exists on server
     #querystr = "http://192.168.43.154:8086/query?"
