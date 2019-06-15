@@ -175,8 +175,8 @@ def api_filter2():
         results['errors'].append({'200':"time period not understood"})
 
     smoothing = query_parameters.get('smoothing')
-    if (smoothing):
-        smoothing *= 60 #convert to seconds
+    if smoothing:
+        smoothing = int(smoothing)
 
     #get response
     #reference headers
@@ -189,7 +189,6 @@ def api_filter2():
             "temperature"
         ]
     results['data']["headers"] = refh
-    print (refh)
     for temp_id in location_id:
         refh = [
             "timestamp",
@@ -230,6 +229,52 @@ def api_filter2():
             results['errors'].append({'100':"We don't have a sensor by that name round here"})
     resultslist  = results['data']["results"]
     results['data']["results"] = sorted(resultslist, key = itemgetter(0)) 
+
+    #smooth the data
+    #**This seems very inefficient**
+    #print("smoothing", file=sys.stderr)
+    resultslist = []
+    if (radius or smoothing):
+        if not smoothing:
+            smoothing = 5 #default to 5min
+        smoothing *= 60 #convert to seconds
+        T = start_time + smoothing
+        n = [0,0,0,0,0,0]
+        v = [0,0,0,0,0,0]
+        for r in results['data']["results"]:
+            t = r[0]
+            if t > T:
+                if t >= (T + smoothing):
+                    #publish data
+                    for N in n:
+                        if (N == 0):
+                            n[n.index(N)] = 1
+                    v = [0,
+                        round(v[1]/n[1],3),
+                        round(v[2]/n[2],3),
+                        round(v[3]/n[3],3),
+                        round(v[4]/n[4],3),
+                        round(v[5]/n[5],3)
+                        ]
+                    resultslist.append([
+                        T,
+                        v[1],
+                        v[2],
+                        v[3],
+                        v[4],
+                        v[5]
+                    ])
+                    T += smoothing
+                    n = [1,1,1,1,1,1]
+                else:
+                    x = 0
+                    for datapoint in r:
+                        if (datapoint):
+                            n[x] += 1
+                            v[x] += datapoint
+                        x += 1
+        results['data']["results"] = resultslist 
+
     return jsonify(results)
     #check if sensor data exists on server
     #querystr = "http://192.168.43.154:8086/query?"
