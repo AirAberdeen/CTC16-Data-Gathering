@@ -36,7 +36,7 @@
                     },
                     "lon":{
                         "in":"query",
-                        "description": "luftdaten location id",
+                        "description": "longitude",
                         "type": "float"
                     },
                     "radius":{
