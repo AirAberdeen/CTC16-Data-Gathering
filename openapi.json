@@ -1,0 +1,123 @@
+{
+    "openapi":"3.0.0",
+    "info":{
+        "title": "Air Aberdeen API",
+        "description": "API to return Air Quality data from across Aberdeen & the NE of Scotland.",
+        "termsOfService": "",
+        "contact": {
+            "name": "Air Aberdeen",
+            "url": "https://www.airaberdeen.org/contact/",
+            "email": "info@airaberdeen.org"
+        },
+        "license": {
+            "name": "The Unlicense",
+            "url": "https://github.com/CodeTheCity/CTC16-Data-Gathering/blob/master/LICENSE"
+        },
+        "version": "2.0.0"
+    },
+    "servers":[{
+        "url": "https://api.aberdeenspaceport.com/api/v2",
+        "description": "Main server"
+      }],
+    "paths":{
+        "/data":{
+            "get":{
+                "description": "Returns QA data as requested by API call arguments",
+                "parameters":{
+                    "location_id":{
+                        "in":"query",
+                        "description": "luftdaten location id",
+                        "type": "integer"
+                    },
+                    "lat":{
+                        "in":"query",
+                        "description": "latitude",
+                        "type": "float"
+                    },
+                    "lon":{
+                        "in":"query",
+                        "description": "luftdaten location id",
+                        "type": "float"
+                    },
+                    "radius":{
+                        "in":"query",
+                        "description": "radius of search area in meters",
+                        "type": "integer"
+                    },
+                    "start_time":{
+                        "in":"query",
+                        "description": "start time (earliest)",
+                        "type": "string"
+                    },
+                    "end_time":{
+                        "in":"query",
+                        "description": "end time (lastest)",
+                        "type": "string"
+                    },
+                    "period":{
+                        "in":"query",
+                        "description": "period after start time, or before end time",
+                        "type": "integer"
+                    },
+                    "smoothing":{
+                        "in":"query",
+                        "description": "average the data over this many minutes",
+                        "type": "integer"
+                    }
+                },
+                "responses": {
+                    "200": {          
+                        "description": "Air Quality Data",
+                        "content": {
+                            "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "items": {
+                                    "query":{
+                                        "location_id":{"type":"string"},
+                                        "lat":{"type":"string"},
+                                        "lon":{"type":"string"},
+                                        "radius":{"type":"string"},
+                                        "start_time":{"type":"string"},
+                                        "end_time":{"type":"string"},
+                                        "period":{"type":"string"},
+                                        "smoothing":{"type":"string"}
+                                    },
+                                    "errors":[{"code":{"type":"string"}, "message":{"type":"string"}}],
+                                    "info":[{
+                                        "location_id": {"type":"string"},
+                                        "P1":{
+                                            "type":"object"
+                                        },
+                                        "P2": {
+                                            "type":"object"
+                                        },
+                                        "humidity": {
+                                            "type":"object"
+                                        },
+                                        "temperature": {
+                                           "type":"object"
+                                        },
+                                        "latitude": {"type":"string"},
+                                        "longitude": {"type":"string"}
+                                     }],
+                                    "data":{
+                                        "headers":{"type":"array"},
+                                        "results":{"type":"array"}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } 
+    },
+    "components":{
+
+    },
+    "security":[],
+    "tags":[],
+    "externalDocs":{}
+
+}
